@@ -95,10 +95,9 @@ app.post("/webhook", express.json(), function (req, res) {
 
   //hasta aquí
   function welcome(agent) {
-    if (registeredUser)
-      agent.add(
-        `Hola! Nos alegra tenerte nuevamente de visita, podemos ayudarte?`
-      );
+    const registeredUser = await rikkoUser.findOne({ facebookId: senderId });
+    if (registeredUser)  agent.add(`Hola! Nos alegra tenerte nuevamente de visita, podemos ayudarte?`
+    );
     else agent.add(`Hola! Te damos la bienvenida, me llamo Rikko y tú?`);
   }
 
