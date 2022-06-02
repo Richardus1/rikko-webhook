@@ -95,7 +95,11 @@ app.post("/webhook", express.json(), function (req, res) {
 
   //hasta aquí
   function welcome(agent) {
-    agent.add(`Hola! Te damos la bienvenida, me llamo Rikko y tú?`);
+    if (registeredUser)
+      agent.add(
+        `Hola! Nos alegra tenerte nuevamente de visita, podemos ayudarte?`
+      );
+    else agent.add(`Hola! Te damos la bienvenida, me llamo Rikko y tú?`);
   }
 
   function fallback(agent) {
