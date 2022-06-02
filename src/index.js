@@ -22,10 +22,29 @@ app.post("/webhook", express.json(), function (req, res) {
   console.log("Dialogflow Request headers: " + JSON.stringify(req.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(req.body));
 
+  //registra usuario
   const senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
   const recipientId =
     req.body.originalDetectIntentRequest.payload.data.recipient.id;
   console.log(`Enviado por ${senderId} a ${recipientId}`);
+
+  async function saveRikkoUserData(senderId) {
+    const registeredUser = await rikkoUser.findOne({ facebookId: senderId });
+    if (registeredUser) return;
+
+    //const userData = await getUserData(senderId); para firstName: userData.first_name
+
+    const RikkoUser = new rikkoUser({
+      facebookId: senderId,
+      firstName: "",
+      lastName: "",
+    });
+    RikkoUser.save((err, res) => {
+      if (err) return console.log("Error al crear usuario", err);
+      console.log("Se creó el usuario: ", res);
+    });
+  }
+  saveRikkoUserData(senderId);
   //conseguir nombres
   /* const senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
   console.log(senderId);
@@ -87,24 +106,6 @@ app.post("/webhook", express.json(), function (req, res) {
   function probandoWebhook(agent) {
     agent.add(`Saliendo desde Napkin!`);
     agent.add(`Listo para tÍ!`);
-
-    async function saveRikkoUserData(senderId) {
-      const registeredUser = await rikkoUser.findOne({ facebookId: senderId });
-      if (registeredUser) return;
-
-      //const userData = await getUserData(senderId); para firstName: userData.first_name
-
-      const RikkoUser = new rikkoUser({
-        facebookId: senderId,
-        firstName: "",
-        lastName: "",
-      });
-      RikkoUser.save((err, res) => {
-        if (err) return console.log("Error al crear usuario", err);
-        console.log("Se creó el usuario: ", res);
-      });
-    }
-    saveRikkoUserData(senderId);
   }
 
   // Run the proper function handler based on the matched Dialogflow intent name
