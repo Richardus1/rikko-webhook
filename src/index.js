@@ -83,11 +83,12 @@ app.post("/webhook", express.json(), function (req, res) {
     agent.add(`Saliendo desde Napkin!`);
     agent.add(`Listo para tÍ!`);
 
-    function receivedMessage(event) {
-      const senderId = event.sender.id;
-      const recipientId = event.recipient.id;
-      console.log(`Enviado por ${senderId} a ${recipientId}`);
-    }
+    const senderId =
+      req.body.originalDetectIntentRequest.payload.data.sender.id;
+    const recipientId =
+      req.body.originalDetectIntentRequest.payload.data.recipient.id;
+    console.log(`Enviado por ${senderId} a ${recipientId}`);
+
     function saveRikkoUserData(senderId) {
       const RikkoUser = new rikkoUser({
         facebookId: senderId,
@@ -99,7 +100,6 @@ app.post("/webhook", express.json(), function (req, res) {
         console.log("Se creó el usuario: ", res);
       });
     }
-    receivedMessage();
     saveRikkoUserData(senderId);
   }
 
