@@ -1,0 +1,24 @@
+{
+  "name": "copianapkin",
+  "version": "1.0.0",
+  "description": "adaptacion y prueba de webhook para dialogflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "Richardus",
+  "license": "ISC",
+  "dependencies": {
+    "actions-on-google": "^3.0.0",
+    "axios": "^0.27.2",
+    "dialogflow-fulfillment": "^0.6.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
