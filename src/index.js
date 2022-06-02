@@ -90,11 +90,11 @@ app.post("/webhook", express.json(), function (req, res) {
     console.log(`Enviado por ${senderId} a ${recipientId}`);
 
     async function saveRikkoUserData(senderId) {
-      const registeredUser = await rikkoUser.findOne(facebookId: senderId);
+      const registeredUser = await rikkoUser.findOne({ facebookId: senderId });
       if (registeredUser) return;
-      
+
       //const userData = await getUserData(senderId); para firstName: userData.first_name
-      
+
       const RikkoUser = new rikkoUser({
         facebookId: senderId,
         firstName: "",
