@@ -21,6 +21,11 @@ app.post("/webhook", express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });
   console.log("Dialogflow Request headers: " + JSON.stringify(req.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(req.body));
+
+  const senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
+  const recipientId =
+    req.body.originalDetectIntentRequest.payload.data.recipient.id;
+  console.log(`Enviado por ${senderId} a ${recipientId}`);
   //conseguir nombres
   /* const senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
   console.log(senderId);
@@ -82,12 +87,6 @@ app.post("/webhook", express.json(), function (req, res) {
   function probandoWebhook(agent) {
     agent.add(`Saliendo desde Napkin!`);
     agent.add(`Listo para tÍ!`);
-
-    const senderId =
-      req.body.originalDetectIntentRequest.payload.data.sender.id;
-    const recipientId =
-      req.body.originalDetectIntentRequest.payload.data.recipient.id;
-    console.log(`Enviado por ${senderId} a ${recipientId}`);
 
     async function saveRikkoUserData(senderId) {
       const registeredUser = await rikkoUser.findOne({ facebookId: senderId });

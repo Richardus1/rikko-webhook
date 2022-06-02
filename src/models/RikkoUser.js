@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const rikkoUserSchema = new Schema(
   {
-    facebookId: String,
+    facebookId: {
+      type: String,
+      unique: true,
+    },
     firstName: String,
     lastName: String,
   },
