@@ -95,12 +95,35 @@ app.post("/webhook", express.json(), function (req, res) {
 
   //hasta aquí
   async function welcome(agent) {
+    let random;
+    let max = 6;
+    function findRandom() {
+      random = Math.floor(Math.random() * max); //Finds number between 0 - max
+      console.log(random);
+    }
+    findRandom();
+
+    const saludosNuevos = [
+      "Hola! Nos alegra tu visita, podemos ayudarte?",
+      "Hola! Eres nuevo por aquí, podemos ayudarte?",
+      "Hi! Es un gusto darte la bienvenida!!!",
+      "Buen día! Es muy grato recibir a un nuevo usuario",
+      "Hola, nos hace felices darte la bienvenida!",
+      "Hola nuevo! Podemos hacer algo por tí?",
+    ];
+
+    const saludosRegistrados = [
+      `Hola! Nos alegra verte nuevamente por aquí`,
+      `Verte nuevamente... es muy grato! Podemos servirte?`,
+      `Hola, regresaste! Te ayudamos hoy?`,
+      `Nuevamente recibe la bienvenida! Podemos ayudarte?`,
+      `No imaginas la alegria que nos da recibirte nuevamente!`,
+      `Tu regreso, nos anima! En qué podemos servirte?`,
+    ];
+
     const registeredUser = await rikkoUser.findOne({ facebookId: senderId });
-    if (registeredUser)
-      agent.add(
-        `Hola! Nos alegra tenerte nuevamente de visita, podemos ayudarte?`
-      );
-    else agent.add(`Hola! Te damos la bienvenida, me llamo Rikko y tú?`);
+    if (registeredUser) agent.add(saludosRegistrados[random]);
+    else agent.add(saludosNuevos[random]);
   }
 
   function fallback(agent) {
