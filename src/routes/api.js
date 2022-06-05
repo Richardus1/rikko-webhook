@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router;
+const router = express.Router();
 
 router.get("/products", (req, res) => {
-  console.log("Página de productos");
+  res.send("Página de productos");
 });
 
 module.exports = router;
