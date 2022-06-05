@@ -13,6 +13,9 @@ const { Card, Suggestion } = require("dialogflow-fulfillment");
 const clientDB = require("./database/dbConnect");
 const rikkoUser = require("./models/RikkoUser");
 
+//middlewares
+app.use("/api", require("./routes/api"));
+
 app.get("/", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
@@ -38,6 +41,11 @@ app.post("/webhook", express.json(), function (req, res) {
       facebookId: senderId,
       firstName: "",
       lastName: "",
+      email: "",
+      phone: "",
+      adress: "",
+      documentId: "",
+      profilePic: "",
     });
     RikkoUser.save((err, res) => {
       if (err) return console.log("Error al crear usuario", err);
