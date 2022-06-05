@@ -14,7 +14,7 @@ const rikkoUserSchema = new Schema(
       unique: true,
     },
     phone: Number,
-    adress: String,
+    address: String,
     documentId: Number,
     profilePic: String,
   },

@@ -42,9 +42,9 @@ app.post("/webhook", express.json(), function (req, res) {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
-      adress: "",
-      documentId: "",
+      phone: null,
+      address: "",
+      documentId: null,
       profilePic: "",
     });
     RikkoUser.save((err, res) => {
