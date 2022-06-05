@@ -9,6 +9,14 @@ const rikkoUserSchema = new Schema(
     },
     firstName: String,
     lastName: String,
+    email: {
+      type: String,
+      unique: true,
+    },
+    phone: Number,
+    adress: String,
+    documentId: Number,
+    profilePic: String,
   },
   { timestamps: true }
 );
