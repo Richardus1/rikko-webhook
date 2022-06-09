@@ -1,5 +1,6 @@
 //librerias
 const express = require("express");
+const { create } = require("express-handlebars");
 const app = express();
 const dotenv = require("dotenv").config();
 //const axios = require("axios");
@@ -13,12 +14,21 @@ const { Card, Suggestion } = require("dialogflow-fulfillment");
 const clientDB = require("./database/dbConnect");
 const rikkoUser = require("./models/RikkoUser");
 
-//middlewares
-app.use("/api", require("./routes/api"));
-
-app.get("/", (req, res) => {
-  return res.send("Chatbot Funcionando 🤖🤖🤖");
+//view engine
+const hbs = create({
+  extname: ".hbs",
+  partialsDir: ["src/views/partials"],
 });
+
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
+app.set("views", "./src/views");
+
+//middlewares
+app.use(express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: false }));
+app.use("/api", require("./routes/api"));
+app.use("/", require("./routes/home"));
 
 app.post("/webhook", express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });

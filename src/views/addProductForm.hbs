@@ -1,0 +1,74 @@
+<h1 class="text-center my-5">Añadir Productos</h1>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <form action="/api/addProduct" method="POST">
+
+      {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> --}}
+      
+      <input 
+        type="text" 
+        name="code" 
+        class="form-control mb-2" 
+        placeholder="Ingrese el código"
+        required
+      >
+
+      <input 
+        type="text" 
+        name="productName" 
+        class="form-control mb-2" 
+        placeholder="Ingrese nombre de producto"
+        required
+      >
+
+      <input 
+        type="text" 
+        name="description" 
+        class="form-control mb-2" 
+        placeholder="Ingrese una descripción"
+        required
+      >
+
+      <input 
+        type="text" 
+        name="img" 
+        class="form-control mb-2" 
+        placeholder="Ingrese la Url de la imagen"
+        required
+      >
+
+      <input 
+        type="number" 
+        name="price" 
+        class="form-control mb-2" 
+        placeholder="Ingrese el precio"
+        required
+      >
+
+      <input 
+        type="number" 
+        name="stockIni" 
+        class="form-control mb-2" 
+        placeholder="Ingrese las unidades a vender"
+        required
+      >
+
+      <input 
+        type="text" 
+        name="stockDisp" 
+        class="form-control mb-2" 
+        placeholder="Confirme unidades a vender"
+        required
+      >
+
+      <input 
+        type="text" 
+        name="variant" 
+        class="form-control mb-2" 
+        placeholder="El producto tiene variantes(colores/tallas)? SI/NO"
+        required
+      >
+      <button class="btn btn-primary" type="submit">Registrar Producto</button>
+    </form>
+  </div>
+</div>

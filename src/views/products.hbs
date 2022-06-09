@@ -1,0 +1,16 @@
+<div class="container">
+  {{#each products }}
+    <div class="row justify-content-center py-3">
+      <div class="card" style="width: 18rem;">
+        <img src="{{img}}" class="card-img-top" alt="Muestra un polo">
+        <div class="card-body">
+          <h5 class="card-title">{{productName}} - {{price}} soles</h5>
+          <p class="card-text">{{description}}</p>
+          <p class="card-text"><small>{{stockDisp}}Unidades disponibles.</small></p>
+          <a href="#" class="btn btn-primary">Hacer Pedido</a>
+        </div>
+      </div> 
+    </div>
+  {{/each}}
+  
+</div>
