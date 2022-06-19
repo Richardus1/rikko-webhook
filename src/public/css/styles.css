@@ -1,0 +1,14 @@
+body{
+  background-color: #110f0fea;
+}
+header{
+  z-index: 100;
+}
+.descripcion{
+  height: 25px;
+  overflow: hidden;
+  transition: height .2s ease-in .2s;
+}
+.descripcion:hover{
+  height: 80px;
+}
