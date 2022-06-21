@@ -77,9 +77,7 @@ const pintarCarrito = () => {
   items.innerHTML = "";
   Object.values(carrito).forEach((producto) => {
     templateCarrito.querySelector("th").textContent = producto.productId;
-    templateCarrito.querySelectorAll(
-      "td"
-    )[0].textContent = `${producto.title} (${producto.productId})`;
+    templateCarrito.querySelectorAll("td")[0].textContent = producto.image; //`${producto.title} (${producto.productId})`;
     templateCarrito.querySelectorAll("td")[1].textContent = producto.amount;
     templateCarrito.querySelector(".btn-info").dataset.id = producto.productId;
     templateCarrito.querySelector(".btn-danger").dataset.id =
