@@ -1,7 +1,7 @@
 body{
   background-color: #110f0fea;
 }
-header{
+header, .alert{
   z-index: 100;
 }
 /* .descripcion{
@@ -12,3 +12,6 @@ header{
 .descripcion:hover{
   height: 80px;
 } */
+.hide{
+  display: none;
+}
