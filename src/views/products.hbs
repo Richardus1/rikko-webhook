@@ -68,7 +68,7 @@
         {{! <div class="container"> }}
         {{#each products}}
           <div class="col d-flex justify-content-center py-2 mb-4">
-            <div class="card shadow mb-1 bg-dark rounded" style="width: 20rem;">
+            <div class="card shadow mb-1 bg-dark rounded" style="width: 18rem;">
               <h5
                 class="card-title pt-2 text-center text-primary"
               >{{productName}}</h5>
@@ -76,17 +76,20 @@
                   {{code}}
                 </small></p>
               <img src="{{img}}" class="card-img-top" alt="Muestra un polo" />
-              {{! <div class="card-body"> }}
-              <p class="card-text text-white descripcion">{{description}}</p>
-              <p class="card-text text-white-50"><small>{{stockDisp}}
-                  Unidades disponibles.
-                </small></p>
-              <h5 class="text-primary">Precio: S/<span
-                  class="price"
-                >{{price}}</span></h5>
-              <a href="#" class="btn btn-primary" data-id="{{code}}">Agregar al
-                Carrito</a>
-              {{! </div> }}
+              <div class="card-body">
+                <p class="card-text text-white descripcion">{{description}}</p>
+                <p class="card-text text-white-50"><small>{{stockDisp}}
+                    Unidades disponibles.
+                  </small></p>
+                <h5 class="text-primary">Precio: S/<span
+                    class="price"
+                  >{{price}}</span></h5>
+                <a
+                  href="#"
+                  class="btn btn-primary button d-block"
+                  data-id="{{code}}"
+                >Agregar al Carrito</a>
+              </div>
             </div>
           </div>
         {{/each}}

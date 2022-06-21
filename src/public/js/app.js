@@ -38,7 +38,7 @@ const addCarrito = (e) => {
   //console.log(e.target);
   e.preventDefault();
   if (e.target.classList.contains("btn-primary")) {
-    setCarrito(e.target.parentElement);
+    setCarrito(e.target.closest(".card"));
     //readTheContent(seleccionado);
     //console.log(seleccionado);
   }
@@ -46,7 +46,7 @@ const addCarrito = (e) => {
 };
 
 const setCarrito = (objeto) => {
-  //console.log(objeto);
+  console.log(objeto);
 
   const alert = document.querySelector(".alert");
 
@@ -62,6 +62,7 @@ const setCarrito = (objeto) => {
     productId: objeto.querySelector(".card a").getAttribute("data-id"),
     amount: 1,
   };
+  console.log(producto);
 
   if (carrito.hasOwnProperty(producto.productId)) {
     producto.amount = carrito[producto.productId].amount + 1;
