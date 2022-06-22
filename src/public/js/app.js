@@ -63,7 +63,7 @@ const setCarrito = (objeto) => {
     productId: objeto.querySelector(".card button").getAttribute("data-id"),
     amount: 1,
   };
-  console.log(producto);
+  //console.log(producto);
 
   if (carrito.hasOwnProperty(producto.productId)) {
     producto.amount = carrito[producto.productId].amount + 1;
@@ -78,7 +78,9 @@ const pintarCarrito = () => {
   items.innerHTML = "";
   Object.values(carrito).forEach((producto) => {
     templateCarrito.querySelector("th").textContent = producto.productId;
-    templateCarrito.querySelectorAll("img").src = producto.image; //`${producto.title} (${producto.productId})`;
+    templateCarrito.querySelectorAll(
+      "td"
+    )[0].textContent = `${producto.title} (${producto.productId})`;
     templateCarrito.querySelectorAll("td")[1].textContent = producto.amount;
     templateCarrito.querySelector(".btn-info").dataset.id = producto.productId;
     templateCarrito.querySelector(".btn-danger").dataset.id =
