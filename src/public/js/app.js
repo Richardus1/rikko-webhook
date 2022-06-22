@@ -31,12 +31,13 @@ items.addEventListener("click", (e) => {
   btnAccion(e);
 });
 document.addEventListener("click", (e) => {
+  //e.preventDefault();
   addCarrito(e);
 });
 
 const addCarrito = (e) => {
   //console.log(e.target);
-  e.preventDefault();
+
   if (e.target.classList.contains("btn-primary")) {
     setCarrito(e.target.closest(".card"));
     //readTheContent(seleccionado);
@@ -59,10 +60,10 @@ const setCarrito = (objeto) => {
     image: objeto.querySelector(".card img").src,
     title: objeto.querySelector(".card-title").textContent,
     price: objeto.querySelector(".price").textContent,
-    productId: objeto.querySelector(".card a").getAttribute("data-id"),
+    productId: objeto.querySelector(".card button").getAttribute("data-id"),
     amount: 1,
   };
-  //console.log(producto);
+  console.log(producto);
 
   if (carrito.hasOwnProperty(producto.productId)) {
     producto.amount = carrito[producto.productId].amount + 1;
@@ -77,9 +78,7 @@ const pintarCarrito = () => {
   items.innerHTML = "";
   Object.values(carrito).forEach((producto) => {
     templateCarrito.querySelector("th").textContent = producto.productId;
-    templateCarrito.querySelectorAll(
-      "td"
-    )[0].textContent = `${producto.title} (${producto.productId})`;
+    templateCarrito.querySelectorAll("td")[0].src = producto.image; //`${producto.title} (${producto.productId})`;
     templateCarrito.querySelectorAll("td")[1].textContent = producto.amount;
     templateCarrito.querySelector(".btn-info").dataset.id = producto.productId;
     templateCarrito.querySelector(".btn-danger").dataset.id =
@@ -125,14 +124,14 @@ const pintarFooter = () => {
     pintarCarrito();
   });
 
-  const btnPagar = document.getElementById("pagar");
+  /* const btnPagar = document.getElementById("pagar");
   btnPagar.addEventListener("click", () => {
     ventas();
   });
 
   const ventas = () => {
     console.log("módulo de ventas");
-  };
+  }; */
 };
 
 const btnAccion = (e) => {

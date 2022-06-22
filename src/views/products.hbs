@@ -84,11 +84,11 @@
                 <h5 class="text-primary">Precio: S/<span
                     class="price"
                   >{{price}}</span></h5>
-                <a
-                  href="#"
-                  class="btn btn-primary button d-block"
-                  data-id="{{code}}"
-                >Agregar al Carrito</a>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary" data-id="{{code}}">Agregar al
+                    Carrito</button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -140,7 +140,8 @@
 <template id="template-carrito">
   <tr>
     <th scope="row">id</th>
-    <td>title</td>
+    <td>
+      <img src="" alt="" /></td>
     <td>amount</td>
     <td>
       <button class="btn btn-info bt-sm">+</button>
@@ -155,7 +156,7 @@
   <td>10</td>
   <td>
     <button class="btn btn-danger btn-sm" id="vaciar-carrito">Vaciar todo</button>
-    <button class="btn btn-success btn-md" id="pagar">Ir a Pagar</button>
+    <a href="/ventas" class="btn btn-success btn-md" id="pagar">Ir a Pagar</a>
   </td>
   <td class="font-weight-bold">S/<span>2000</span></td>
 </template>
