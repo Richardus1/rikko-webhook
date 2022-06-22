@@ -77,11 +77,14 @@ const pintarCarrito = () => {
   //console.log(carrito);
   items.innerHTML = "";
   Object.values(carrito).forEach((producto) => {
-    templateCarrito.querySelector("th").textContent = producto.productId;
+    // templateCarrito.querySelector("th").textContent = producto.productId;
+    templateCarrito.querySelector("img").src = producto.image;
+    templateCarrito.querySelector(
+      "h6"
+    ).textContent = `${producto.title} - (${producto.productId})`;
     templateCarrito.querySelectorAll(
       "td"
-    )[0].textContent = `${producto.title} (${producto.productId})`;
-    templateCarrito.querySelectorAll("td")[1].textContent = producto.amount;
+    )[1].textContent = `${producto.amount} x ${producto.price}`;
     templateCarrito.querySelector(".btn-info").dataset.id = producto.productId;
     templateCarrito.querySelector(".btn-danger").dataset.id =
       producto.productId;
