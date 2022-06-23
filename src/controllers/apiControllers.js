@@ -44,9 +44,14 @@ const showProduct = async (req, res) => {
   return res.render("products", { products });
 };
 
+const eligePago = (req, res) => {
+  res.render("mediosPago");
+};
+
 module.exports = {
   loginForm,
   addProductForm,
   addProduct,
   showProduct,
+  eligePago,
 };
