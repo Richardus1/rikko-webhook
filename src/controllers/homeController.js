@@ -34,7 +34,7 @@ const addUser = async (req, res) => {
       throw new Error("Ya estás registrado, haz login!");
     } else {
       //console.log(senderId);
-      if (!myIndex.senderId) {
+      if (!senderId) {
         user = new RikkoUser({
           tipoDocumento,
           documentId,
@@ -52,7 +52,7 @@ const addUser = async (req, res) => {
         //enviar email de verificación
       } else {
         user = await RikkoUser.updateOne(
-          { facebookId: myIndex.senderId },
+          { facebookId: senderId },
           {
             tipoDocumento,
             documentId,
