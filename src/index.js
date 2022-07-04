@@ -1,5 +1,6 @@
 //librerias
 const express = require("express");
+
 const { create } = require("express-handlebars");
 const app = express();
 const dotenv = require("dotenv").config();
@@ -11,7 +12,7 @@ const { Card, Suggestion } = require("dialogflow-fulfillment");
 //files
 
 //DB connection, models
-const clientDB = require("./database/dbConnect");
+require("./database/dbConnect");
 const rikkoUser = require("./models/RikkoUser");
 
 //view engine
@@ -27,8 +28,12 @@ app.set("views", "./src/views");
 //middlewares
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
-app.use("/api", require("./routes/api"));
-app.use("/", require("./routes/home"));
+app.use(express.json());
+app.use("/api/v1", require("./routes/apiRoutes"));
+app.use("/", require("./routes/homeRoutes"));
+
+var senderId = "";
+exports.senderId = senderId;
 
 app.post("/webhook", express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });
@@ -36,7 +41,7 @@ app.post("/webhook", express.json(), function (req, res) {
   console.log("Dialogflow Request body: " + JSON.stringify(req.body));
 
   //registra usuario
-  const senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
+  senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
   const recipientId =
     req.body.originalDetectIntentRequest.payload.data.recipient.id;
   console.log(`Enviado por ${senderId} a ${recipientId}`);
@@ -49,14 +54,8 @@ app.post("/webhook", express.json(), function (req, res) {
 
     const RikkoUser = new rikkoUser({
       facebookId: senderId,
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: null,
-      address: "",
-      documentId: null,
-      profilePic: "",
     });
+
     RikkoUser.save((err, res) => {
       if (err) return console.log("Error al crear usuario", err);
       console.log("Se creó el usuario: ", res);

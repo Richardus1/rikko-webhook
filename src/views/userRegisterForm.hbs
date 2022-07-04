@@ -1,0 +1,99 @@
+{{>Navbar}}
+<h2 class="text-center text-primary my-4">Formulario de Registro<br>Para qué?</h2>
+
+<div class="container text-white" style="width: 20rem;">
+  <p>Para que tu experiencia de compra sea agradable, segura... así sabremos a quién y dónde entregar tu pedido manteniendo una comunicación directa contigo.</p>
+  {{!-- <div class="col-md-6"> --}}
+    <form action="/addUser" method="POST">
+
+      {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> --}}
+       <label for="tipo">Elige tu documento:</label>
+       <select name="tipoDocumento" id="tipo">
+        <option value="DNI">DNI
+        <option value="C.E.">Carné de Extranjería
+        <option value="Pasaporte">Pasaporte
+        <option value="Otro">Otro
+        </select>
+       
+       <input 
+        type="text" 
+        name="documentId" 
+        class="form-control mb-2" 
+        placeholder="Ingresa tu número de documento"
+        required
+      >
+      
+      <input 
+        type="text" 
+        name="firstName" 
+        class="form-control mb-2" 
+        placeholder="Ingresa tus nombres"
+        required
+      >
+
+       <input 
+        type="text" 
+        name="lastName" 
+        class="form-control mb-2" 
+        placeholder="Ingresa tus apellidos"
+        required
+      >
+      <input 
+        type="email" 
+        name="email" 
+        class="form-control mb-2" 
+        placeholder="Ingresa tu email"
+        required
+      >
+
+       <input 
+        type="tel" 
+        name="phone" 
+        class="form-control mb-2" 
+        placeholder="Ingrese tu celular o fijo"
+        required
+      >
+
+       <input 
+        type="text" 
+        name="address" 
+        class="form-control mb-2" 
+        placeholder="Ingresa dirección de entrega"
+        required
+      >
+
+      <input 
+        type="password" 
+        name="password" 
+        class="form-control mb-2" 
+        placeholder="Ingresa password min 6 caract."
+        required
+      >
+
+      <input 
+        type="password" 
+        name="rePassword" 
+        class="form-control mb-2" 
+        placeholder="Repite password"
+        required
+      >
+      <input type="checkbox" name="aceptoPoliticas" id="ok"><p class="acepto">Acepto las 
+      <br>
+      <a href="https://www.iubenda.com/privacy-policy/70859722" class="politicas">Politicas de uso de datos personales</a></p>
+      <button id="boton"disabled class="btn btn-primary" type="submit">Registrarse </button>
+      <script>
+        const checkbox = document.getElementById('ok');
+        checkbox.addEventListener("change", validaCheckbox, false);
+        
+        function validaCheckbox()
+        {
+          const checked = checkbox.checked;
+          if(checked){
+             document.getElementById('boton').disabled = false;
+          } else  document.getElementById('boton').disabled = true;
+
+        }
+      </script>
+    </form>
+  {{!-- </div> --}}
+</div>

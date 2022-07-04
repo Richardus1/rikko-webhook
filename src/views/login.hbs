@@ -1,1 +1,33 @@
-<h1>Login</h1>
+{{>Navbar}}
+<h2 class="text-center text-primary my-5">Login de Usuarios</h2>
+
+<div class="container text-white" style="width: 20rem;">
+  {{!-- <div class="col-md-6"> --}}
+    <form action="/login" method="POST">
+
+      {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> --}}
+
+      <input
+        type="text"
+        name="email"
+        class="form-control mb-2"
+        placeholder="Ingresa tu email"
+        required
+      />
+
+      <input
+        type="password"
+        name="password"
+        class="form-control mb-2"
+        placeholder="Ingresa tu password"
+        required
+      />
+
+      <p align="right">Eres nuevo?  <a href="/addUser ">Regístrate aquí</a></p>
+
+      
+      <button class="btn btn-primary" type="submit">Acceder</button>
+      
+    </form>
+  {{!-- </div> --}}
+</div>

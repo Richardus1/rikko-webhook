@@ -1,16 +1,15 @@
 const express = require("express");
 const {
   addProductForm,
-  loginForm,
   showProduct,
   addProduct,
   eligePago,
-} = require("../controllers/apiControllers");
+} = require("../controllers/apiController");
 const router = express.Router();
 
-router.get("/login", loginForm);
 router.get("/addProduct", addProductForm);
 router.post("/addProduct", addProduct);
 router.get("/product", showProduct);
 router.get("/pago", eligePago);
+
 module.exports = router;

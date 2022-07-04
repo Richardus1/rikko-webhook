@@ -1,9 +1,5 @@
 const Product = require("../models/Product");
 
-const loginForm = (req, res) => {
-  res.render("login");
-};
-
 const addProductForm = (req, res) => {
   res.render("addProductForm");
 };
@@ -49,7 +45,6 @@ const eligePago = (req, res) => {
 };
 
 module.exports = {
-  loginForm,
   addProductForm,
   addProduct,
   showProduct,
