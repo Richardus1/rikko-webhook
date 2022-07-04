@@ -33,7 +33,7 @@ const addUser = async (req, res) => {
     if (user) {
       throw new Error("Ya estás registrado, haz login!");
     } else {
-      console.log(senderId);
+      console.log(myIndex.senderId);
       if (!myIndex.senderId) {
         user = new RikkoUser({
           tipoDocumento,
