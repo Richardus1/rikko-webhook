@@ -32,7 +32,7 @@ app.use(express.json());
 app.use("/api/v1", require("./routes/apiRoutes"));
 app.use("/", require("./routes/homeRoutes"));
 
-var senderId = "";
+var senderId;
 exports.senderId = senderId;
 
 app.post("/webhook", express.json(), function (req, res) {

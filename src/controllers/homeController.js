@@ -16,7 +16,7 @@ const addUser = async (req, res) => {
   console.log(req.body);
   // let senderId = "123456";
   var myIndex = require("../index");
-  var senderId = myIndex.senderId;
+  //var senderId = myIndex.senderId;
   const {
     tipoDocumento,
     documentId,
@@ -33,8 +33,8 @@ const addUser = async (req, res) => {
     if (user) {
       throw new Error("Ya estás registrado, haz login!");
     } else {
-      console.log(senderId);
-      if (!senderId) {
+      //console.log(senderId);
+      if (!myIndex.senderId) {
         user = new RikkoUser({
           tipoDocumento,
           documentId,
@@ -52,7 +52,7 @@ const addUser = async (req, res) => {
         //enviar email de verificación
       } else {
         user = await RikkoUser.updateOne(
-          { facebookId: senderId },
+          { facebookId: myIndex.senderId },
           {
             tipoDocumento,
             documentId,
