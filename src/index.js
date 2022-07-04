@@ -32,8 +32,8 @@ app.use(express.json());
 app.use("/api/v1", require("./routes/apiRoutes"));
 app.use("/", require("./routes/homeRoutes"));
 
-var senderId;
-exports.senderId = senderId;
+/* var senderId;
+exports.senderId = senderId; */
 
 app.post("/webhook", express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });
@@ -42,6 +42,8 @@ app.post("/webhook", express.json(), function (req, res) {
 
   //registra usuario
   senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
+  exports.senderId = senderId;
+
   const recipientId =
     req.body.originalDetectIntentRequest.payload.data.recipient.id;
   console.log(`Enviado por ${senderId} a ${recipientId}`);
