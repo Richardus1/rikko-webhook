@@ -14,7 +14,23 @@ const router = express.Router();
 
 router.get("/", muestraPanel);
 router.get("/login", loginForm);
-router.post("/login", login);
+router.post(
+  "/login",
+  [
+    body("email", "Ingresa un email válido")
+      .trim()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .escape(),
+    body("password", "Mínimo 6 carácteres.")
+      .trim()
+      .notEmpty()
+      .isLength({ min: 6, max: 30 })
+      .escape(),
+  ],
+  login
+);
 router.get("/addUser", addUserForm);
 router.post(
   "/addUser",

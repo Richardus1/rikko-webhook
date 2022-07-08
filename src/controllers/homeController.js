@@ -138,7 +138,8 @@ const confirmarCuenta = async (req, res) => {
 
   try {
     user = await RikkoUser.findOne({ tokenConfirm: token });
-    if (!user) throw new Error("Usuario no existe");
+    if (!user)
+      throw new Error("Ya usaste este enlace anteriormente, haz Login ...");
 
     user.cuentaConfirmada = true;
     user.tokenConfirm = null;
