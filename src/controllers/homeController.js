@@ -112,7 +112,7 @@ const addUser = async (req, res) => {
 
         const mailOptions = {
           from: "La tienda!!! <rikkodigital@gmail.com>",
-          to: process.env.DESTINO,
+          to: user.email,
           subject: "Confirma tu cuenta de correo",
           html: `<a href="${
             process.env.PATHHEROKU || "http://localhost:4000"
