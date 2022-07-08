@@ -71,6 +71,6 @@ router.post(
   validationRes,
   addUser
 );
-router.get("/confirmar", confirmarCuenta);
+router.get("/confirmar/:token", confirmarCuenta);
 
 module.exports = router;

@@ -134,16 +134,16 @@ const addUser = async (req, res) => {
 };
 
 const confirmarCuenta = async (req, res) => {
-  const { tokenConfirm } = req.params;
+  const { token } = req.params;
 
   try {
-    user = await RikkoUser.findOne([tokenConfirm]);
+    user = await RikkoUser.findOne({ tokenConfirm: token });
     if (!user) throw new Error("Usuario no existe");
 
     user.cuentaConfirmada = true;
     user.tokenConfirm = null;
     await user.save();
-    res.redirect("/login");
+    return res.redirect("/login");
   } catch (error) {
     console.log(error.message);
   }
