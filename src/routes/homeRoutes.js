@@ -5,6 +5,7 @@ const {
   loginForm,
   addUserForm,
   addUser,
+  login,
 } = require("../controllers/homeController");
 const validationRes = require("../midlewares/validationResult");
 // const validaUserData = require("../midlewares/validaUserData");
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.get("/", muestraPanel);
 router.get("/login", loginForm);
+router.post("/login", login);
 router.get("/addUser", addUserForm);
 router.post(
   "/addUser",

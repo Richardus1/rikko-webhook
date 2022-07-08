@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
 const RikkoUser = require("../models/RikkoUser");
 
 const muestraPanel = (req, res) => {
@@ -13,10 +15,10 @@ const loginForm = (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  console.log(req.body);
-  // let senderId = "123456";
+  //console.log(req.body);
+  // variable global importada;
   var myIndex = require("../index");
-  //var senderId = myIndex.senderId;
+
   const {
     tipoDocumento,
     documentId,
@@ -28,12 +30,13 @@ const addUser = async (req, res) => {
     password,
     aceptoPoliticas,
   } = req.body;
+
   try {
     let user = await RikkoUser.findOne({ email });
     if (user) {
       throw new Error("Ya estás registrado, haz login!");
     } else {
-      console.log(myIndex.senderId);
+      //console.log(myIndex.senderId);
       if (!myIndex.senderId) {
         user = new RikkoUser({
           tipoDocumento,
@@ -44,12 +47,12 @@ const addUser = async (req, res) => {
           phone,
           address,
           password,
+          tokenConfirm: uuidv4(),
           aceptoPoliticas,
         });
         await user.save();
-        return res.redirect("/login");
-
-        //enviar email de verificación
+        res.send("Registrado exitosamente");
+        //return res.redirect("/login");
       } else {
         user = await RikkoUser.updateOne(
           { facebookId: myIndex.senderId },
@@ -62,45 +65,86 @@ const addUser = async (req, res) => {
             phone,
             address,
             password,
+            tokenConfirm: uuidv4(),
             aceptoPoliticas,
+          },
+          function (error, res) {
+            if (error) throw new Error("Ocurrión un error inesperado");
+            res.send("Registrado exitosamente!!!");
           }
         );
       }
     }
+    //enviar email de verificacion
+    const CLIENT_ID = process.env.CLIENT_ID;
+    const CLIENT_SECRET = process.env.CLIENT_SECRET;
+    const REDIRECT_URI = process.env.REDIRECT_URI;
+    const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
-    /*  let user = await RikkoUser.updateOne(
-      { email },
-      {
-        facebookId: "123123",
-        tipoDocumento,
-        documentId,
-        firstName,
-        lastName,
-        phone,
-        address,
-        password,
-        aceptoPoliticas,
+    const oAuth2Client = new google.auth.OAuth2(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      REDIRECT_URI
+    );
+
+    oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+    async function sendMail() {
+      try {
+        const accessToken = await oAuth2Client.getAccessToken();
+        /* if (Error)
+          return console.log(
+            "Fallo al conseguir el refreshToken, el correo no se envió"
+          ); se cayó al incluir este aviso de error */
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            type: "OAuth2",
+            user: process.env.USER,
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
+            refreshToken: REFRESH_TOKEN,
+            accessToken: accessToken,
+          },
+        });
+
+        const mailOptions = {
+          from: "La tienda!!! <rikkodigital@gmail.com>",
+          to: user.email,
+          subject: "Confirma tu cuenta de correo",
+          html: `<a href="${
+            process.env.PATHHEROKU || "http://localhost:4000"
+          }confirmar/${user.tokenConfirm}">Verifica tu cuenta aquí</a>`,
+        };
+
+        const result = await transporter.sendMail(mailOptions);
+        return result;
+      } catch (error) {
+        console.log(error);
       }
-    ); */
-    /*  if (user) {
-      throw new Error("Ya registrado, ve al Login");
-    } */
-    /* 
-    user = new RikkoUser({
-      tipoDocumento,
-      documentId,
-      firstName,
-      lastName,
-      email,
-      phone,
-      address,
-      password,
-      aceptoPoliticas,
-    });
-    await user.updateOne(); */
+    }
+    sendMail();
+    //jwt token
     console.log(user);
   } catch (error) {
     res.json({ error: error.message });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    let user = await RikkoUser.findOne({ email });
+    if (!user) throw new Error("Usuario no existe!");
+
+    if (!(await user.comparePassword(password)))
+      throw new Error("Credenciales incorrectas!");
+
+    res.send("Logueado");
+  } catch (error) {
+    res.send(error.message);
   }
 };
 
@@ -109,4 +153,5 @@ module.exports = {
   loginForm,
   addUserForm,
   addUser,
+  login,
 };

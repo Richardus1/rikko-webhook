@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
 
 const rikkoUserSchema = new Schema(
   {
@@ -63,5 +64,24 @@ const rikkoUserSchema = new Schema(
   },
   { timestamps: true }
 );
+
+rikkoUserSchema.pre("save", async function (next) {
+  const user = this;
+
+  if (!user.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    next();
+  } catch (error) {
+    console.log(error);
+    throw new Error("Falló el hash de contraseña");
+  }
+});
+
+rikkoUserSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 
 module.exports = mongoose.model("RikkoUser", rikkoUserSchema);

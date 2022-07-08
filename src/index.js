@@ -32,15 +32,13 @@ app.use(express.json());
 app.use("/api/v1", require("./routes/apiRoutes"));
 app.use("/", require("./routes/homeRoutes"));
 
-/* var senderId;
-exports.senderId = senderId; */
-
 app.post("/webhook", express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });
   console.log("Dialogflow Request headers: " + JSON.stringify(req.headers));
   console.log("Dialogflow Request body: " + JSON.stringify(req.body));
 
   //registra usuario
+
   senderId = req.body.originalDetectIntentRequest.payload.data.sender.id;
   exports.senderId = senderId;
 
@@ -136,7 +134,7 @@ app.post("/webhook", express.json(), function (req, res) {
       `Verte nuevamente... es muy grato! Podemos servirte?`,
       `Hola, regresaste! Te ayudamos hoy?`,
       `Nuevamente recibe la bienvenida! Podemos ayudarte?`,
-      `No imaginas la alegria que nos da recibirte nuevamente!`,
+      `Gracias por la alegria que nos da, recibirte nuevamente!`,
       `Tu regreso, nos anima! En qué podemos servirte?`,
     ];
 
