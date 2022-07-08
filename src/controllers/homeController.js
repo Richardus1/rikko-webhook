@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 const RikkoUser = require("../models/RikkoUser");
 
 const muestraPanel = (req, res) => {
@@ -111,7 +112,7 @@ const addUser = async (req, res) => {
 
         const mailOptions = {
           from: "La tienda!!! <rikkodigital@gmail.com>",
-          to: user.email,
+          to: process.env.DESTINO,
           subject: "Confirma tu cuenta de correo",
           html: `<a href="${
             process.env.PATHHEROKU || "http://localhost:4000"
