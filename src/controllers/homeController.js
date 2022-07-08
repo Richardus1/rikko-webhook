@@ -122,7 +122,7 @@ const addUser = async (req, res) => {
         const result = await transporter.sendMail(mailOptions);
         return result;
       } catch (error) {
-        console.log(error);
+        res.send(error);
       }
     }
     sendMail();
@@ -146,7 +146,7 @@ const confirmarCuenta = async (req, res) => {
     await user.save();
     return res.redirect("/login");
   } catch (error) {
-    console.log(error.message);
+    res.send(error.message);
   }
 };
 
