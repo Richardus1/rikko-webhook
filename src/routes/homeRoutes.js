@@ -6,6 +6,7 @@ const {
   addUserForm,
   addUser,
   login,
+  confirmarCuenta,
 } = require("../controllers/homeController");
 const validationRes = require("../midlewares/validationResult");
 // const validaUserData = require("../midlewares/validaUserData");
@@ -70,5 +71,6 @@ router.post(
   validationRes,
   addUser
 );
+router.get("/confirmar", confirmarCuenta);
 
 module.exports = router;

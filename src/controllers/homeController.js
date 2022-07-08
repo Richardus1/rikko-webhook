@@ -133,6 +133,22 @@ const addUser = async (req, res) => {
   }
 };
 
+const confirmarCuenta = async (req, res) => {
+  const { tokenConfirm } = req.params;
+
+  try {
+    user = await RikkoUser.findOne([tokenConfirm]);
+    if (!user) throw new Error("Usuario no existe");
+
+    user.cuentaConfirmada = true;
+    user.tokenConfirm = null;
+    await user.save();
+    res.redirect("/login");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -154,5 +170,6 @@ module.exports = {
   loginForm,
   addUserForm,
   addUser,
+  confirmarCuenta,
   login,
 };
