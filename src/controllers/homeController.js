@@ -157,11 +157,14 @@ const login = async (req, res) => {
     let user = await RikkoUser.findOne({ email });
     if (!user) throw new Error("Usuario no existe!");
 
+    if (!user.cuentaConfirmada) throw new Error("Falta confirmar tu cuenta");
+
     if (!(await user.comparePassword(password)))
       throw new Error("Credenciales incorrectas!");
 
-    res.send("Logueado");
+    res.redirect("/api/v1/products");
   } catch (error) {
+    console.log(error);
     res.send(error.message);
   }
 };
