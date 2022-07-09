@@ -162,7 +162,7 @@ const login = async (req, res) => {
     if (!(await user.comparePassword(password)))
       throw new Error("Credenciales incorrectas!");
 
-    res.redirect("/api/v1/products");
+    res.redirect("/api/v1/product");
   } catch (error) {
     console.log(error);
     res.send(error.message);
