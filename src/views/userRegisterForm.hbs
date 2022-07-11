@@ -1,4 +1,9 @@
 {{>Navbar}}
+
+{{#each mensajes}}
+      <div class="class alert alert-primary mb-2">{{this.msg}}</div>
+    {{/each}}
+
 <h2 class="text-center text-primary my-4">Formulario de Registro<br>Para qué?</h2>
 
 <div class="container text-white" style="width: 20rem;">

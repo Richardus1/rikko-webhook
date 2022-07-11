@@ -1,9 +1,11 @@
 //librerias
 const express = require("express");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const { create } = require("express-handlebars");
 const app = express();
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 //const axios = require("axios");
 
 const { WebhookClient } = require("dialogflow-fulfillment");
@@ -26,6 +28,25 @@ app.set("view engine", "hbs");
 app.set("views", "./src/views");
 
 //middlewares
+
+//configuracion de session para usar flash
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    name: "nombreSecreto",
+  })
+);
+
+app.use(flash());
+
+app.use((req, res, next) => {
+  //res.locals.csrfToken = req.csrfToken();
+  res.locals.mensajes = req.flash("mensajes");
+  next();
+});
+
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

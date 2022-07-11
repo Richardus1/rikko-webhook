@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const { validationResult } = require("express-validator");
+const flash = require("connect-flash");
 const RikkoUser = require("../models/RikkoUser");
 
 const muestraPanel = (req, res) => {
@@ -19,6 +21,12 @@ const addUser = async (req, res) => {
   //console.log(req.body);
   // variable global importada;
   var myIndex = require("../index");
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash("mensajes", errors.array());
+    return res.redirect("/addUser");
+  }
 
   const {
     tipoDocumento,
@@ -52,8 +60,6 @@ const addUser = async (req, res) => {
           aceptoPoliticas,
         });
         await user.save();
-        res.send("Registrado exitosamente");
-        //return res.redirect("/login");
       } else {
         user = await RikkoUser.updateOne(
           { facebookId: myIndex.senderId },
@@ -71,7 +77,6 @@ const addUser = async (req, res) => {
           },
           function (error, res) {
             if (error) throw new Error("Ocurrión un error inesperado");
-            res.send("Registrado exitosamente!!!");
           }
         );
       }
@@ -120,16 +125,21 @@ const addUser = async (req, res) => {
         };
 
         const result = await transporter.sendMail(mailOptions);
+        //return result;
+        req.flash("mensajes", [{ msg: "Revisa tu correo y valida tu cuenta" }]);
+        res.redirect("/addUser");
         return result;
       } catch (error) {
-        res.send(error);
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/addUser");
       }
     }
     sendMail();
     //jwt token
-    console.log(user);
+    //console.log(user);
   } catch (error) {
-    res.json({ error: error.message });
+    req.flash("mensajes", [{ msg: error.message }]);
+    return res.redirect("/addUser");
   }
 };
 
@@ -146,26 +156,32 @@ const confirmarCuenta = async (req, res) => {
     await user.save();
     return res.redirect("/login");
   } catch (error) {
-    res.send(error.message);
+    req.flash("mensajes", [{ msg: error.message }]);
+    return res.redirect("/login");
   }
 };
 
 const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash("mensajes", errors.array());
+    return res.redirect("/login");
+  }
 
+  const { email, password } = req.body;
+  try {
     let user = await RikkoUser.findOne({ email });
-    if (!user) throw new Error("Usuario no existe!");
+    if (!user) throw new Error("Credenciales incorrectas!");
 
     if (!user.cuentaConfirmada) throw new Error("Falta confirmar tu cuenta");
 
     if (!(await user.comparePassword(password)))
       throw new Error("Credenciales incorrectas!");
 
-    res.redirect("/api/v1/product");
+    return res.redirect("/api/v1/product");
   } catch (error) {
-    console.log(error);
-    res.send(error.message);
+    req.flash("mensajes", [{ msg: error.message }]);
+    return res.redirect("/login");
   }
 };
 

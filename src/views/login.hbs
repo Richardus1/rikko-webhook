@@ -1,4 +1,9 @@
 {{>Navbar}}
+
+{{#each mensajes}}
+      <div class="class alert alert-primary mb-2">{{this.msg}}</div>
+    {{/each}}
+
 <h2 class="text-center text-primary my-5">Login de Usuarios</h2>
 
 <div class="container text-white" style="width: 20rem;">

@@ -1,3 +1,4 @@
+//por implementar
 const authRoles = (permisos) => {
   return (req, res, next) => {
     const userRole = req.body.role;
