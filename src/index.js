@@ -2,6 +2,8 @@
 const express = require("express");
 const session = require("express-session");
 const flash = require("connect-flash");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const { create } = require("express-handlebars");
 const app = express();
@@ -47,9 +49,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/v1", require("./routes/apiRoutes"));
 app.use("/", require("./routes/homeRoutes"));
 

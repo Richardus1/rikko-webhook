@@ -3,14 +3,19 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const { validationResult } = require("express-validator");
 const flash = require("connect-flash");
+const jwt = require("jsonwebtoken");
 const RikkoUser = require("../models/RikkoUser");
+const {
+  generateToken,
+  generateRefreshToken,
+} = require("../utils/tokenManager");
 
 const muestraPanel = (req, res) => {
   return res.render("home");
 };
 
 const addUserForm = (req, res) => {
-  res.render("userRegisterForm");
+  res.render("addUserForm");
 };
 
 const loginForm = (req, res) => {
@@ -154,6 +159,9 @@ const confirmarCuenta = async (req, res) => {
     user.cuentaConfirmada = true;
     user.tokenConfirm = null;
     await user.save();
+    req.flash("mensajes", [
+      { msg: "Cuenta confirmada, ya puedes iniciar sesión" },
+    ]);
     return res.redirect("/login");
   } catch (error) {
     req.flash("mensajes", [{ msg: error.message }]);
@@ -178,11 +186,22 @@ const login = async (req, res) => {
     if (!(await user.comparePassword(password)))
       throw new Error("Credenciales incorrectas!");
 
+    //generar el jwt token
+    const { token, expiresIn } = generateToken(user.id);
+    generateRefreshToken(user.id, res);
+
+    //console.log({ token, expiresIn });
+
     return res.redirect("/api/v1/product");
   } catch (error) {
     req.flash("mensajes", [{ msg: error.message }]);
     return res.redirect("/login");
   }
+};
+
+const logOut = (req, res) => {
+  res.clearCookie("refreshToken");
+  res.redirect("/login");
 };
 
 module.exports = {
@@ -192,4 +211,5 @@ module.exports = {
   addUser,
   confirmarCuenta,
   login,
+  logOut,
 };
