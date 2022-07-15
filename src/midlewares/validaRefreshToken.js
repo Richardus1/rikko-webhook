@@ -7,13 +7,17 @@ const {
 const refreshToken = (req, res, next) => {
   try {
     const refreshTokenCookie = req.cookies.refreshToken;
-    if (!refreshTokenCookie) throw new Error("No existe el token, haz login!");
+    if (!refreshTokenCookie) throw new Error("Si te registraste, haz login!");
 
-    const { uid } = jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH);
-    const { token, expiresIn } = generateToken(req.uid);
+    const { uid, urole } = jwt.verify(
+      refreshTokenCookie,
+      process.env.JWT_REFRESH
+    );
+    const { token, expiresIn } = generateToken(uid, urole);
     //console.log({ token, expiresIn });
     req.token = token;
-    req.uid = uid;
+    /* req.uid = uid;
+    req.urole = urole; */
     next();
   } catch (error) {
     //.log(error.message);

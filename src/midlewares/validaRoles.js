@@ -1,7 +1,10 @@
 //por implementar
-const authRoles = (permisos) => {
+const jwt = require("jsonwebtoken");
+
+validaRoles = (permisos) => {
   return (req, res, next) => {
-    const userRole = req.body.role;
+    const userRole = req.urole;
+    //console.log(userRole);
     if (permisos.includes(userRole)) {
       next();
     } else {
@@ -11,5 +14,5 @@ const authRoles = (permisos) => {
 };
 
 module.exports = {
-  authRoles,
+  validaRoles,
 };

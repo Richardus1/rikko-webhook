@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
 
-const generateToken = (uid) => {
+const generateToken = (uid, urole) => {
   try {
     const expiresIn = 60 * 15;
-    const token = jwt.sign({ uid }, process.env.JWT_SECRET, { expiresIn });
+    const token = jwt.sign({ uid, urole }, process.env.JWT_SECRET, {
+      expiresIn,
+    });
     //console.log(token, expiresIn);
     return { token, expiresIn };
   } catch (error) {
@@ -13,11 +15,11 @@ const generateToken = (uid) => {
   }
 };
 
-const generateRefreshToken = (uid, res) => {
+const generateRefreshToken = (uid, urole, res) => {
   const expiresIn = 60 * 60 * 24 * 30;
 
   try {
-    const refreshToken = jwt.sign({ uid }, process.env.JWT_REFRESH, {
+    const refreshToken = jwt.sign({ uid, urole }, process.env.JWT_REFRESH, {
       expiresIn,
     });
 

@@ -187,8 +187,9 @@ const login = async (req, res) => {
       throw new Error("Credenciales incorrectas!");
 
     //generar el jwt token
-    const { token, expiresIn } = generateToken(user.id);
-    generateRefreshToken(user.id, res);
+    const { token, expiresIn } = generateToken(user.id, user.role);
+    //console.log(user.id, user.role);
+    generateRefreshToken(user.id, user.role, res);
 
     //console.log({ token, expiresIn });
 
