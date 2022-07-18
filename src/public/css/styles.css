@@ -38,3 +38,53 @@ header, .alert{
   margin-top: 0px;
   margin-left: 0px;
 } */
+
+.nuevo{
+  margin-top: -30px;
+}
+.tienda{
+  margin-top: -10px;
+}
+
+form{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding:0 1rem;
+}
+.field{
+  display: flex;
+  flex-direction: column;
+
+  width: 12rem;
+  margin: 0.5rem 0;
+}
+.field label{
+  font-size: 0.85rem;
+
+  margin-bottom: 0.1rem;
+}
+.metro{
+  display: flex;
+  flex-direction: column;
+
+  width: 11rem;
+  margin: 0.5rem 1rem;
+  margin-top: 0.1rem;
+
+  font-size: 0.85rem;
+}
+.pagar{
+  display: flex;
+  flex-direction: column;
+
+  width: 8rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.5rem;
+}
